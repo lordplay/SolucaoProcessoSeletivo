@@ -162,7 +162,7 @@
     <Compile Include="DAO\AlunoDAO.cs" />
     <Compile Include="DAO\SistemaContext.cs" />
     <Compile Include="Entidades\Aluno.cs" />
-    <Compile Include="Entidades\Nota.cs" />
+    <Compile Include="Entidades\Avaliacao.cs" />
     <Compile Include="Entidades\Turma.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -25,7 +25,7 @@ namespace SistemaAcademico.DAO
         {
             using (SistemaContext context = new SistemaContext())
             {
-                IList<Aluno> Alunos = context.Alunos.Include(b => b.Turma).Include(b => b.Nota).ToList();
+                IList<Aluno> Alunos = context.Alunos.Include(b => b.Turma).Include(b => b.Avaliacao).ToList();
                 return Alunos;
             }
         }

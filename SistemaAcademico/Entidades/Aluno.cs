@@ -16,13 +16,20 @@ namespace SistemaAcademico.Entidades
         public int Id { get; set; }
         public int Matricula { get; set; }
         public string Nome { get; set; }
+        public _Status Status { get; set; }
 
         //Tabela nota
-        public Nota Nota { get; set; }
+        public Avaliacao Avaliacao { get; set; }
 
         //Tabela turma
         public int TurmaId { get; set; }
         public Turma Turma { get; set; }
-        
+
+        //Codigo de Status --> Aprovado ou Nao Aprovado
+         public enum _Status
+        {
+            Reprovado = 0,
+            Aprovado = 1
+        }
     }
 }

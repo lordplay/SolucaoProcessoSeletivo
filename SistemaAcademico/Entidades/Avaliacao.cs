@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SistemaAcademico.Entidades
 {
-    public class Nota
+    public class Avaliacao
     {
         [ForeignKey("Aluno")]
         public int Id { get; set; }
@@ -17,6 +17,8 @@ namespace SistemaAcademico.Entidades
 
         //Calculo
         public float NotaFinal { get; set; }
+
+
         public float Media { get; set; }
 
         //Aluno
