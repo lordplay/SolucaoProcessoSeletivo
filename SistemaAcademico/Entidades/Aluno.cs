@@ -10,13 +10,15 @@ namespace SistemaAcademico.Entidades
     public class Aluno
     {
         //Tabela usuario
+
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int Matricula { get; set; }
         public string Nome { get; set; }
-        public float Nota1{ get; set; }
-        public float Nota2 { get; set; }
-        public float Nota3 { get; set; }
+
+        //Tabela nota
+        public Nota Nota { get; set; }
 
         //Tabela turma
         public int TurmaId { get; set; }

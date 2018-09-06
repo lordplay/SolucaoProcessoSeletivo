@@ -156,9 +156,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AlunoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAO\TurmaDAO.cs" />
+    <Compile Include="DAO\AlunoDAO.cs" />
     <Compile Include="DAO\SistemaContext.cs" />
     <Compile Include="Entidades\Aluno.cs" />
+    <Compile Include="Entidades\Nota.cs" />
     <Compile Include="Entidades\Turma.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -254,6 +258,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Views\Aluno\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

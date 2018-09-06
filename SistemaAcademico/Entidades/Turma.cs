@@ -10,6 +10,7 @@ namespace SistemaAcademico.Entidades
     public class Turma
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TurmaId { get; set; }
         public string Nome { get; set; }
 

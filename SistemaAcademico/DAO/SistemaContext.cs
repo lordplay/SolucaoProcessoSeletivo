@@ -11,10 +11,14 @@ namespace SistemaAcademico.DAO
     {
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Turma> Turmas { get; set; }
+        public DbSet<Nota> Notas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Aluno>()
+                .HasRequired(s => s.Nota)
+                .WithRequiredPrincipal(ad => ad.Aluno);
+
         }
     }
 }
