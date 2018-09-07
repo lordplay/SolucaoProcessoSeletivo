@@ -11,14 +11,16 @@ namespace SistemaAcademico.DAO
     {
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Turma> Turmas { get; set; }
-        public DbSet<Avaliacao> Notas { get; set; }
 
+
+        //Desabilitar o LazyLoading
+        public SistemaContext(): base("name=SistemaContext")
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Aluno>()
-                .HasRequired(s => s.Avaliacao)
-                .WithRequiredPrincipal(ad => ad.Aluno);
-
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

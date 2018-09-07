@@ -40,23 +40,51 @@ namespace SistemaAcademico.Controllers
                 for (int x = 1; x <= 20; x++)
                 {
                     Aluno aluno = new Aluno();
+                    
                     aluno.Nome = "Aluno " + x;
                     aluno.Matricula = (random.Next(1, 10000) + 10000);
-                    aluno.Avaliacao.Nota1 = random.Next(0, 10);
-                    aluno.Avaliacao.Nota2 = random.Next(0, 10);
-                    aluno.Avaliacao.Nota3 = random.Next(0, 10);
+                    aluno.Nota1 = random.Next(0, 10);
+                    aluno.Nota2 = random.Next(0, 10);
+                    aluno.Nota3 = random.Next(0, 10);
                     aluno.Turma = turma;
                     ListaDeAlunos.Add(aluno);
                 }
-                dAOTurma.Adiciona(turma);
-                dAOAluno.Adiciona(ListaDeAlunos);
+                dAOTurma.Adiciona(turma); // Gravar uma turma 
+                dAOAluno.Adiciona(ListaDeAlunos); // Gravar Lista de Alunos
             }
             return RedirectToAction("Index");
         }
 
-        public ActionResult CalculaMedia()
+        //Calcular Todas as Medias 
+        public ActionResult CalculaTodasAsMedias()
         {
+            AlunoDAO dAO = new AlunoDAO();
+            IList<Aluno> alunos = dAO.ListarAlunos();
+            List<Aluno> alunosEditados = new List<Aluno>();
+            foreach(Aluno aluno in alunos)
+            {
+                aluno.CalculaMedia();
+                alunosEditados.Add(aluno);
+            }
+            dAO.Editar(alunosEditados);
+            return View("Index");
+        }
 
+        //Verificar o Status do Aluno
+        public ActionResult VerificaEstado()
+        {
+            AlunoDAO dAO = new AlunoDAO(); 
+            IList<Aluno> alunos = new List<Aluno>();
+            List<Aluno> alunosLista = new List<Aluno>();
+
+            alunos = dAO.ListarAlunos();
+            foreach(Aluno aluno in alunos)
+            {
+                aluno.VerificaEstado();
+                alunosLista.Add(aluno);
+            }
+            dAO.Editar(alunosLista);
+            return RedirectToAction("Index");
         }
     }
 }

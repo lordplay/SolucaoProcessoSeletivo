@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using System.Threading.Tasks;
+using System;
+
 namespace SistemaAcademico.DAO
 {
-    public class AlunoDAO
+    public class AlunoDAO 
     {
         public void Adiciona(IList<Aluno> alunos)
         {
@@ -16,7 +19,7 @@ namespace SistemaAcademico.DAO
                 {
                     context.Alunos.Add(aluno);
                 }
-                context.SaveChanges();
+               context.SaveChangesAsync();
             }
         }
 
@@ -25,8 +28,21 @@ namespace SistemaAcademico.DAO
         {
             using (SistemaContext context = new SistemaContext())
             {
-                IList<Aluno> Alunos = context.Alunos.Include(b => b.Turma).Include(b => b.Avaliacao).ToList();
+                IList<Aluno> Alunos = context.Alunos.Include(b => b.Turma).ToList();
                 return Alunos;
+            }
+        }
+
+        //Editar Aluno
+        public void Editar(IList<Aluno> alunos)
+        {
+            using (SistemaContext context = new SistemaContext())
+            {
+                foreach (Aluno aluno in alunos)
+                {
+                    context.Entry(aluno).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
             }
         }
     }
