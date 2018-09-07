@@ -38,6 +38,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Media)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediaFinal)
+        </th>
         <th></th>
     </tr>
 
@@ -69,6 +72,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Media)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MediaFinal)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

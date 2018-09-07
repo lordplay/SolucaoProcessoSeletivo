@@ -29,7 +29,10 @@ namespace SistemaAcademico.Entidades
         public double NotaFinal { get; set; }
 
         //Calculo Media
-        public double Media { get => Math.Round(_media, 2); set => _media = value; } //Limita o valor dos 0 
+        public double Media { get => Math.Round(_media, 2); set => _media = value; } //Limitar 0's
+
+        //Media + prova final
+        public double MediaFinal { get; set; }
 
         //Tabela turma
         public int TurmaId { get; set; }
@@ -49,6 +52,7 @@ namespace SistemaAcademico.Entidades
             this.Media = (Nota1 + (Nota2 * 0.2) + (Nota3 * 0.4)) / 3;
         }
 
+        //Verificar o status do aluno
         public void VerificaEstado() //  
         {
             if (this.Media > 6)
@@ -62,6 +66,20 @@ namespace SistemaAcademico.Entidades
             else
             {
                 this.Status = _Status.ProvaFinal;
+            }
+        }
+
+        //Calcula a media final do aluno e atribui aprovado/reprovado
+        internal void CalculaMediaFinal()
+        {
+            this.MediaFinal = this.Media + this.NotaFinal;
+            if (this.MediaFinal >= 5)
+            {
+                this.Status = _Status.Aprovado;
+            }
+            else
+            {
+                this.Status = _Status.Reprovado;
             }
         }
     }

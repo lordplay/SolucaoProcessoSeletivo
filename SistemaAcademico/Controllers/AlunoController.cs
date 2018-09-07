@@ -3,8 +3,10 @@ using SistemaAcademico.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static SistemaAcademico.Entidades.Aluno;
 
 namespace SistemaAcademico.Controllers
 {
@@ -40,7 +42,6 @@ namespace SistemaAcademico.Controllers
                 for (int x = 1; x <= 20; x++)
                 {
                     Aluno aluno = new Aluno();
-                    
                     aluno.Nome = "Aluno " + x;
                     aluno.Matricula = (random.Next(1, 10000) + 10000);
                     aluno.Nota1 = random.Next(0, 10);
@@ -49,17 +50,17 @@ namespace SistemaAcademico.Controllers
                     aluno.Turma = turma;
                     ListaDeAlunos.Add(aluno);
                 }
-                dAOTurma.Adiciona(turma); // Gravar uma turma 
-                dAOAluno.Adiciona(ListaDeAlunos); // Gravar Lista de Alunos
+                dAOTurma.Adiciona(turma);
+                dAOAluno.Adiciona(ListaDeAlunos);
             }
             return RedirectToAction("Index");
         }
 
-        //Calcular Todas as Medias 
+        //Calcular a media de todos os alunos --> Somente notas 1,2 e 3
         public ActionResult CalculaTodasAsMedias()
         {
             AlunoDAO dAO = new AlunoDAO();
-            IList<Aluno> alunos = dAO.ListarAlunos();
+            IList<Aluno> alunos =  dAO.ListarAlunos();
             List<Aluno> alunosEditados = new List<Aluno>();
             foreach(Aluno aluno in alunos)
             {
@@ -67,21 +68,62 @@ namespace SistemaAcademico.Controllers
                 alunosEditados.Add(aluno);
             }
             dAO.Editar(alunosEditados);
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         //Verificar o Status do Aluno
         public ActionResult VerificaEstado()
         {
             AlunoDAO dAO = new AlunoDAO(); 
-            IList<Aluno> alunos = new List<Aluno>();
-            List<Aluno> alunosLista = new List<Aluno>();
+            IList<Aluno> alunos = new List<Aluno>(); //Lista para guardar os alunos do banco de dados
+            List<Aluno> alunosLista = new List<Aluno>(); //Lista para guardar os alunos que serão editados
 
-            alunos = dAO.ListarAlunos();
+            alunos =  dAO.ListarAlunos();
             foreach(Aluno aluno in alunos)
             {
-                aluno.VerificaEstado();
+                aluno.VerificaEstado(); //Altera o status do aluno para Aprovado, Reprovado ou Prova Final
                 alunosLista.Add(aluno);
+            }
+            dAO.Editar(alunosLista);
+            return RedirectToAction("Index");
+        }
+
+        //Popular notas da prova final e calcular as pessoas que ficaram de fato reprovadas. 
+        public ActionResult PopulaNotaFinal()
+        {
+            //Gerador de numeros 
+            Random random = new Random();
+
+            AlunoDAO dAO = new AlunoDAO();
+            List<Aluno> alunos = new List<Aluno>();
+            List<Aluno> alunosLista = new List<Aluno>(); 
+
+            //Buscar alunos com status provaFinal
+            alunos = dAO.Busca(_Status.ProvaFinal);
+            
+            //Gerar notas finais para esses alunos 
+            foreach (Aluno aluno in alunos)
+            {
+                aluno.NotaFinal = random.Next(4,10); //Atribuir nota
+                alunosLista.Add(aluno); //Adicionar aluno na lista 
+            }
+            dAO.Editar(alunosLista);
+            return RedirectToAction("CalcularMediaFinal", alunosLista);
+        }
+        //Reanalizar alunos com nota final
+        public ActionResult CalcularMediaFinal()
+        {
+            AlunoDAO dAO = new AlunoDAO();
+            List<Aluno> alunos = new List<Aluno>();
+            List<Aluno> alunosLista = new List<Aluno>();
+
+            //Busca por alunos que estão com status de prova final e calcula sua MediaFinal
+            alunos = dAO.Busca(_Status.ProvaFinal);
+
+            foreach(Aluno aluno in alunos)
+            {
+                aluno.CalculaMediaFinal(); //Calcula e altera o status do aluno para aprovado/reprovado. 
+                alunos.Add(aluno);
             }
             dAO.Editar(alunosLista);
             return RedirectToAction("Index");

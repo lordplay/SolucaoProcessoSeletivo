@@ -7,7 +7,7 @@ using System;
 
 namespace SistemaAcademico.DAO
 {
-    public class AlunoDAO 
+    public class AlunoDAO
     {
         public void Adiciona(IList<Aluno> alunos)
         {
@@ -19,17 +19,16 @@ namespace SistemaAcademico.DAO
                 {
                     context.Alunos.Add(aluno);
                 }
-               context.SaveChangesAsync();
+                context.SaveChanges();
             }
         }
 
         //Listar Alunos
-        public IList<Aluno> ListarAlunos()
+        public  IList<Aluno> ListarAlunos()
         {
             using (SistemaContext context = new SistemaContext())
             {
-                IList<Aluno> Alunos = context.Alunos.Include(b => b.Turma).ToList();
-                return Alunos;
+                return context.Alunos.Include(b => b.Turma).ToList();
             }
         }
 
@@ -43,6 +42,20 @@ namespace SistemaAcademico.DAO
                     context.Entry(aluno).State = EntityState.Modified;
                     context.SaveChanges();
                 }
+            }
+        }
+
+        //Buscar Academico em Status de Prova Final ---> 
+        internal List<Aluno> Busca(Aluno._Status? provaFinal)
+        {
+            using (SistemaContext context = new SistemaContext())
+            {
+                IQueryable<Aluno> busca = context.Alunos;
+                if ((int)provaFinal != 4) // Sempre verdadeiro 
+                {
+                    busca = busca.Where(p => p.Status == provaFinal); //Filtra o resultado somente para alunos que irão realizar a prova final. 
+                }
+                return busca.ToList();
             }
         }
     }
