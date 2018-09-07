@@ -256,6 +256,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Aluno\Index.cshtml" />
     <Content Include="Views\Aluno\PopulaAluno.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

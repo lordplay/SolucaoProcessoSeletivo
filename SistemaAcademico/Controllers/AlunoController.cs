@@ -44,9 +44,9 @@ namespace SistemaAcademico.Controllers
                     Aluno aluno = new Aluno();
                     aluno.Nome = "Aluno " + x;
                     aluno.Matricula = (random.Next(1, 10000) + 10000);
-                    aluno.Nota1 = random.Next(0, 10);
-                    aluno.Nota2 = random.Next(0, 10);
-                    aluno.Nota3 = random.Next(0, 10);
+                    aluno.Nota1 = random.Next(1, 10);
+                    aluno.Nota2 = random.Next(1, 10);
+                    aluno.Nota3 = random.Next(1, 10);
                     aluno.Turma = turma;
                     ListaDeAlunos.Add(aluno);
                 }
@@ -108,25 +108,28 @@ namespace SistemaAcademico.Controllers
                 alunosLista.Add(aluno); //Adicionar aluno na lista 
             }
             dAO.Editar(alunosLista);
-            return RedirectToAction("CalcularMediaFinal", alunosLista);
+            return RedirectToAction("Index");
         }
-        //Reanalizar alunos com nota final
+
+        //Calcula Media das Duas ultimas provas e altera o status do aluno para aprovado/reprovado
         public ActionResult CalcularMediaFinal()
         {
             AlunoDAO dAO = new AlunoDAO();
-            List<Aluno> alunos = new List<Aluno>();
+            IList<Aluno> alunos = new List<Aluno>();
             List<Aluno> alunosLista = new List<Aluno>();
 
             //Busca por alunos que estão com status de prova final e calcula sua MediaFinal
             alunos = dAO.Busca(_Status.ProvaFinal);
-
+            //Logica para calcular a media de cada aluno em prova final 
             foreach(Aluno aluno in alunos)
             {
                 aluno.CalculaMediaFinal(); //Calcula e altera o status do aluno para aprovado/reprovado. 
-                alunos.Add(aluno);
+                alunosLista.Add(aluno);
             }
             dAO.Editar(alunosLista);
             return RedirectToAction("Index");
         }
+
+        //
     }
 }

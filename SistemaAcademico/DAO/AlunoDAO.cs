@@ -28,7 +28,7 @@ namespace SistemaAcademico.DAO
         {
             using (SistemaContext context = new SistemaContext())
             {
-                return context.Alunos.Include(b => b.Turma).ToList();
+                return context.Alunos.Include(b => b.Turma).OrderBy(b => b.Status).ToList();
             }
         }
 
@@ -46,14 +46,15 @@ namespace SistemaAcademico.DAO
         }
 
         //Buscar Academico em Status de Prova Final ---> 
-        internal List<Aluno> Busca(Aluno._Status? provaFinal)
+        internal List<Aluno> Busca(Aluno._Status status)
         {
             using (SistemaContext context = new SistemaContext())
             {
-                IQueryable<Aluno> busca = context.Alunos;
-                if ((int)provaFinal != 4) // Sempre verdadeiro 
+                IQueryable<Aluno> busca = context.Alunos.Include(b => b.Turma);
+
+                if ((int)status != 4) // Sempre verdadeiro 
                 {
-                    busca = busca.Where(p => p.Status == provaFinal); //Filtra o resultado somente para alunos que irão realizar a prova final. 
+                    busca = busca.Where(p => p.Status == status); //Filtra o resultado somente para alunos que irão realizar a prova final. 
                 }
                 return busca.ToList();
             }
