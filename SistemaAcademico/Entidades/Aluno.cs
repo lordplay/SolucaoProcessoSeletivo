@@ -9,7 +9,6 @@ namespace SistemaAcademico.Entidades
 {
     public class Aluno
     {
-        private double _media;
 
         //Tabela usuario
 
@@ -31,9 +30,12 @@ namespace SistemaAcademico.Entidades
         //Calculo Media
         public double Media { get; set; }
 
-
         //Media + prova final
         public double MediaFinal { get; set; }
+
+        //Prova Especial
+        public double ProvaEspecial { get; set; }
+        public double MediaProvaEspecial { get;set }
 
         //Tabela turma
         public int TurmaId { get; set; }
@@ -101,5 +103,7 @@ namespace SistemaAcademico.Entidades
                 this.Status = _Status.Reprovado;
             }
         }
+
+        //Calcular MediaProvaEspecial
     }
 }

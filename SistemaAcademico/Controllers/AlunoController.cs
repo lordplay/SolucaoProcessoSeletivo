@@ -99,7 +99,7 @@ namespace SistemaAcademico.Controllers
             List<Aluno> alunosLista = new List<Aluno>(); 
 
             //Buscar alunos com status provaFinal
-            alunos = dAO.Busca(_Status.ProvaFinal);
+            alunos = dAO.Busca(_Status.ProvaFinal, 0);
             
             //Gerar notas finais para esses alunos 
             foreach (Aluno aluno in alunos)
@@ -119,7 +119,7 @@ namespace SistemaAcademico.Controllers
             List<Aluno> alunosLista = new List<Aluno>();
 
             //Busca por alunos que estão com status de prova final e calcula sua MediaFinal
-            alunos = dAO.Busca(_Status.ProvaFinal);
+            alunos = dAO.Busca(_Status.ProvaFinal,0);
             //Logica para calcular a media de cada aluno em prova final 
             foreach(Aluno aluno in alunos)
             {
@@ -130,6 +130,6 @@ namespace SistemaAcademico.Controllers
             return RedirectToAction("Index");
         }
 
-        //
+       
     }
 }

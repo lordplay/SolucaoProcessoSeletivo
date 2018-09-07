@@ -7,8 +7,10 @@ using System;
 
 namespace SistemaAcademico.DAO
 {
-    public class AlunoDAO
+    public class AlunoDAO 
     {
+        
+
         public void Adiciona(IList<Aluno> alunos)
         {
             //Recebe uam lista de alunos e para cada aluno, ele adiciona ao banco de dados --> 
@@ -21,10 +23,11 @@ namespace SistemaAcademico.DAO
                 }
                 context.SaveChanges();
             }
+
         }
 
         //Listar Alunos
-        public  IList<Aluno> ListarAlunos()
+        public IList<Aluno> ListarAlunos()
         {
             using (SistemaContext context = new SistemaContext())
             {
@@ -46,18 +49,29 @@ namespace SistemaAcademico.DAO
         }
 
         //Buscar Academico em Status de Prova Final ---> 
-        internal List<Aluno> Busca(Aluno._Status status)
+        internal List<Aluno> Busca(Aluno._Status? status, int resultado)
         {
             using (SistemaContext context = new SistemaContext())
             {
                 IQueryable<Aluno> busca = context.Alunos.Include(b => b.Turma);
 
-                if ((int)status != 4) // Sempre verdadeiro 
+                if (status.HasValue) // Sempre verdadeiro 
                 {
                     busca = busca.Where(p => p.Status == status); //Filtra o resultado somente para alunos que irão realizar a prova final. 
+                }
+
+                //Busca resultados se necessario 
+                if (resultado != 0) 
+                {
+                    busca = busca.OrderByDescending(x => x.MediaFinal).ThenByDescending(x => x.Media).Take(resultado);
+                }
+                else
+                {
+
                 }
                 return busca.ToList();
             }
         }
+        
     }
 }
