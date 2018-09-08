@@ -4,19 +4,19 @@ using System.Linq;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System;
+using System.Data.Entity.Migrations;
 
 namespace SistemaAcademico.DAO
 {
-    public class AlunoDAO 
+    public class AlunoDAO : IDisposable
     {
-        
+        private SistemaContext contexto = new SistemaContext();
 
         public void Adiciona(IList<Aluno> alunos)
         {
-            //Recebe uam lista de alunos e para cada aluno, ele adiciona ao banco de dados --> 
+            IList<Aluno> Lista = alunos;
             using (SistemaContext context = new SistemaContext())
             {
-                IList<Aluno> Lista = alunos;
                 foreach (Aluno aluno in alunos)
                 {
                     context.Alunos.Add(aluno);
@@ -27,51 +27,50 @@ namespace SistemaAcademico.DAO
         }
 
         //Listar Alunos
-        public IList<Aluno> ListarAlunos()
+        public List<Aluno> ListarAlunos()
         {
             using (SistemaContext context = new SistemaContext())
             {
-                return context.Alunos.Include(b => b.Turma).OrderBy(b => b.Status).ToList();
+                return context.Alunos.Include(b => b.Turma).ToList();
             }
         }
 
         //Editar Aluno
-        public void Editar(IList<Aluno> alunos)
+        public void Editar(List<Aluno> alunos)
         {
             using (SistemaContext context = new SistemaContext())
             {
                 foreach (Aluno aluno in alunos)
                 {
                     context.Entry(aluno).State = EntityState.Modified;
-                    context.SaveChanges();
+                    contexto.SaveChanges();
                 }
             }
+
         }
 
         //Buscar Academico em Status de Prova Final ---> 
-        internal List<Aluno> Busca(Aluno._Status? status, int resultado)
+        internal List<Aluno> BuscaEstadoFinal()
         {
-            using (SistemaContext context = new SistemaContext())
-            {
-                IQueryable<Aluno> busca = context.Alunos.Include(b => b.Turma);
-
-                if (status.HasValue) // Sempre verdadeiro 
-                {
-                    busca = busca.Where(p => p.Status == status); //Filtra o resultado somente para alunos que irão realizar a prova final. 
-                }
-
-                //Busca resultados se necessario 
-                if (resultado != 0) 
-                {
-                    busca = busca.OrderByDescending(x => x.MediaFinal).ThenByDescending(x => x.Media).Take(resultado);
-                }
-                else
-                {
-
-                }
-                return busca.ToList();
-            }
+            return contexto.Alunos.Include(x => x.Turma).Where(x => x.Status == Aluno._Status.ProvaFinal).ToList();
         }
-        
+
+        //Buscar competidor 
+        internal List<Aluno> BuscaCompetidores()
+        {
+            return contexto.Alunos.Include(x => x.Turma).OrderByDescending(x => x.NotaParaCompeticao).Take(5).ToList();
+        }
+
+
+        //Buscar Campeao 
+        internal List<Aluno> BuscaCampeao()
+        {
+            return contexto.Alunos.Include(t => t.Turma).OrderByDescending(x => x.MediaCompeticao).Take(1).ToList();
+        }
+
+        public void Dispose()
+        {
+            contexto.Dispose();
+        }
     }
 }

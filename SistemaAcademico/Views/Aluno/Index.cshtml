@@ -36,10 +36,19 @@
             @Html.DisplayNameFor(model => model.NotaFinal)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Media)
+            @Html.DisplayNameFor(model => model.MediaPonderada)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MediaFinal)
+            @Html.DisplayNameFor(model => model.MediaPonderadaEProvaFinal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotaParaCompeticao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProvaEspecial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediaCompeticao)
         </th>
         <th></th>
     </tr>
@@ -71,10 +80,19 @@
             @Html.DisplayFor(modelItem => item.NotaFinal)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Media)
+            @Html.DisplayFor(modelItem => item.MediaPonderada)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.MediaFinal)
+            @Html.DisplayFor(modelItem => item.MediaPonderadaEProvaFinal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NotaParaCompeticao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProvaEspecial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MediaCompeticao)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
