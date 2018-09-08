@@ -26,7 +26,7 @@ namespace SistemaAcademico.Controllers
         }
 
         //Gerar nota para os 5 primeiros alunos 
-        public async Task<ActionResult> GeraNotaEspecialAsync()
+        public async Task<ActionResult> GerarNotaEspecialAsync()
         {
             //Buscar pelos 5 primeiros alunos com a nota mais alta
             List<Aluno> alunos = new List<Aluno>();
@@ -40,7 +40,7 @@ namespace SistemaAcademico.Controllers
             }
 
             //Salvo todas as ediçoes feitas 
-            dAO.Editar(ListaDeAlunos);
+            await dAO.Editar(ListaDeAlunos);
 
             //Retornar para o Index
             return RedirectToAction("Index");
@@ -68,7 +68,7 @@ namespace SistemaAcademico.Controllers
                     aluno.MediaCompeticao = ((aluno.Nota1 + aluno.Nota2 + aluno.Nota3 + (aluno.ProvaEspecial * 2)) / 5);
                     ListaDeAlunos.Add(aluno);
                 }
-                dAO.Editar(ListaDeAlunos);
+                await dAO.Editar(ListaDeAlunos);
             }
 
             return RedirectToAction("Index");

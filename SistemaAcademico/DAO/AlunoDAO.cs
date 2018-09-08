@@ -8,7 +8,7 @@ using System.Data.Entity.Migrations;
 
 namespace SistemaAcademico.DAO
 {
-    public class AlunoDAO : IDisposable
+    public class AlunoDAO 
     {
         private SistemaContext contexto = new SistemaContext();
 
@@ -36,14 +36,14 @@ namespace SistemaAcademico.DAO
         }
 
         //Editar Aluno
-        public void Editar(List<Aluno> alunos)
+        public async Task Editar(List<Aluno> alunos)
         {
             using (SistemaContext context = new SistemaContext())
             {
                 foreach (Aluno aluno in alunos)
                 {
                     context.Entry(aluno).State = EntityState.Modified;
-                    contexto.SaveChanges();
+                    await context.SaveChangesAsync();
                 }
             }
 
@@ -58,7 +58,8 @@ namespace SistemaAcademico.DAO
         //Buscar competidor 
         internal List<Aluno> BuscaCompetidores()
         {
-            return contexto.Alunos.Include(x => x.Turma).OrderByDescending(x => x.NotaParaCompeticao).Take(5).ToList();
+
+            return contexto.Alunos.Include(x => x.Turma).OrderByDescending(x => x.NotaParaCompeticao).Where(X => X.Status == Aluno._Status.Aprovado).Take(5).ToList(); ;
         }
 
 
@@ -68,9 +69,6 @@ namespace SistemaAcademico.DAO
             return contexto.Alunos.Include(t => t.Turma).OrderByDescending(x => x.MediaCompeticao).Take(1).ToList();
         }
 
-        public void Dispose()
-        {
-            contexto.Dispose();
-        }
+       
     }
 }

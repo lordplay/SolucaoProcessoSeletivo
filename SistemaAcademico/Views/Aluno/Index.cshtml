@@ -1,15 +1,12 @@
 ﻿@model IEnumerable<SistemaAcademico.Entidades.Aluno>
 
-@{
-    ViewBag.Title = "Index";
-}
 
 <h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-bordered text-center">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Turma.Nome)
@@ -53,53 +50,59 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Turma.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Matricula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nota1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nota2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nota3)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NotaFinal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MediaPonderada)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MediaPonderadaEProvaFinal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NotaParaCompeticao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProvaEspecial)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MediaCompeticao)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Turma.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Matricula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            @if (item.Nota1 > 6)
+            {
+                <td class="table-success">
+                    @Html.DisplayFor(modelItem => item.Nota1)
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nota1)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Nota2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nota3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotaFinal, new { @class = "align-middle" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediaPonderada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediaPonderadaEProvaFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotaParaCompeticao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProvaEspecial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediaCompeticao)
+            </td>
+
+        </tr>
+    }
 
 </table>

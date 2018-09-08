@@ -64,7 +64,7 @@ namespace SistemaAcademico.Controllers
         }
 
         //Calcular a media de todos os alunos --> Somente notas 1,2 e 3
-        public ActionResult CalculaTodasAsMedias()
+        public async Task<ActionResult> CalculaTodasAsMediasAsync()
         {
             AlunoDAO dAO = new AlunoDAO();
             IList<Aluno> alunos = dAO.ListarAlunos();
@@ -74,15 +74,15 @@ namespace SistemaAcademico.Controllers
                 aluno.CalculaMedia();
                 alunosEditados.Add(aluno);
             }
-            dAO.Editar(alunosEditados);
+            await dAO.Editar(alunosEditados);
             return RedirectToAction("Index");
         }
 
         //Verificar o Status do Aluno
-        public ActionResult VerificaStatus()
+        public async Task<ActionResult> VerificaStatusAsync()
         {
             AlunoDAO dAO = new AlunoDAO();
-            List<Aluno> alunos = new List<Aluno>(); //Lista para guardar os alunos do banco de dados
+            IList<Aluno> alunos = dAO.ListarAlunos();  //Lista para guardar os alunos do banco de dados
             List<Aluno> ListaDeAlunos = new List<Aluno>();
             alunos = dAO.ListarAlunos();
             foreach (Aluno aluno in alunos)
@@ -90,12 +90,12 @@ namespace SistemaAcademico.Controllers
                 aluno.VerificaEstado(); //Altera o status do aluno para Aprovado, Reprovado ou Prova Final
                 ListaDeAlunos.Add(aluno);
             }
-            dAO.Editar(ListaDeAlunos);
+            await dAO.Editar(ListaDeAlunos);
             return RedirectToAction("Index");
         }
 
         //Popular notas da prova final e calcular as pessoas que ficaram de fato reprovadas. 
-        public ActionResult PopulaNotaFinal()
+        public async Task<ActionResult> PopulaNotaFinalAsync()
         {
             //Instancia do DAO
             AlunoDAO dAO = new AlunoDAO();
@@ -115,12 +115,12 @@ namespace SistemaAcademico.Controllers
                 aluno.NotaFinal = random.Next(4, 10); //Atribuir nota
                 ListaDeAlunos.Add(aluno); //Adicionar aluno na lista 
             }
-            dAO.Editar(ListaDeAlunos);
+            await dAO.Editar(ListaDeAlunos);
             return RedirectToAction("Index");
         }
 
         //Calcula Media das Duas ultimas provas e altera o status do aluno para aprovado/reprovado
-        public async Task<ActionResult> CalcularMediaFinal()
+        public async Task<ActionResult> CalcularMediaFinalAsync()
         {
             AlunoDAO dAO = new AlunoDAO();
             IList<Aluno> alunos = new List<Aluno>();
@@ -134,17 +134,15 @@ namespace SistemaAcademico.Controllers
                 aluno.CalculaMediaFinal(); //Calcula e altera o status do aluno para aprovado/reprovado. 
                 alunosLista.Add(aluno);
             }
-            dAO.Editar(alunosLista);
+            await dAO.Editar(alunosLista);
             return RedirectToAction("Index");
         }
 
         //Preencher Nota Final Para A Competição
-        public async Task<ActionResult> PreencheNotaParaCompeticao()
+        public async Task<ActionResult> PreencheNotaParaCompeticaoAsync()
         {
             AlunoDAO dAO = new AlunoDAO();
-            IList<Aluno> alunos = new List<Aluno>();
-            alunos = dAO.ListarAlunos();
-
+            List<Aluno> alunos = dAO.ListarAlunos();
             List<Aluno> ListaDeAlunos = new List<Aluno>();
 
             foreach (Aluno aluno in alunos)
@@ -152,7 +150,7 @@ namespace SistemaAcademico.Controllers
                 aluno.PreencheNotaParaCompeticao();
                 ListaDeAlunos.Add(aluno);
             }
-            dAO.Editar(ListaDeAlunos);
+            await dAO.Editar(ListaDeAlunos);
             return RedirectToAction("Index");
         }
 

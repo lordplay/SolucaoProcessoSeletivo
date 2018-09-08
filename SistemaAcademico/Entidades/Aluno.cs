@@ -42,7 +42,7 @@ namespace SistemaAcademico.Entidades
         }
 
         //Avaliação Final
-        private double notaFinal;
+        private double? notaFinal;
         [DisplayName("Avaliação Final")]
         public double? NotaFinal
         {
@@ -55,8 +55,13 @@ namespace SistemaAcademico.Entidades
                 if (value.HasValue)
                 {
                     notaFinal = Convert.ToDouble(value);
+                    CalculaMediaFinal();
                 }
-                CalculaMediaFinal();
+                else
+                {
+                    notaFinal = null;
+                }
+
             }
         }
 
@@ -79,8 +84,9 @@ namespace SistemaAcademico.Entidades
         public double ProvaEspecial { get; set; }
 
         //Media de Todas as notas
+        private double mediaCompeticao;
         [DisplayName("Media Competitiva")]
-        public double MediaCompeticao { get; set; }
+        public double MediaCompeticao { get => mediaCompeticao ; set => mediaCompeticao = Math.Round(value, 2); }
         //-----------------------------------------------------------------------------
         //Tabela turma
         public int TurmaId { get; set; }
