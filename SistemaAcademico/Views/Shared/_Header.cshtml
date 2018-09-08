@@ -5,27 +5,25 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Competição
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="@Url.Action("Index","Premios")">Ver competidores</a>
+                    <a class="dropdown-item" href="@Url.Action("GerarNotaEspecialAsync","Premios")">Emular Avaliação Competitiva</a>
+                    <a class="dropdown-item" href="@Url.Action("MostrarRanking","Premios")">Mostrar Ranking</a>
+                </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Aluno
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="@Url.Action("Index","Aluno")">Listar de Alunos</a>
-                    <a class="dropdown-item" href="@Url.Action("PopulaAluno","Aluno")">Gerar cadastros</a>
-                    <a class="dropdown-item" href="@Url.Action("CalculaTodasAsMedias")">Calcular Media</a>
-                    <a class="dropdown-item" href="@Url.Action("VerificaStatus","Aluno")">Verifica estado de aprovação</a>
-                    <a class="dropdown-item" href="@Url.Action("PopulaNotaFinal","Aluno")">Gerar nota para prova final</a>
-                    <a class="dropdown-item" href="@Url.Action("CalculaMediaFinal","Aluno")">Calcular Media com a nota final</a>
-                    <a class="dropdown-item" href="@Url.Action("PreencherNotaParaCompeticao","Aluno")">Preencher nota para competição</a>
+                    <a class="dropdown-item" href="@Url.Action("Index","Aluno")">Lista de alunos</a>
+                    <a class="dropdown-item" href="@Url.Action("PopulaAluno","Aluno")">Emular Cadastros</a>
+                    <a class="dropdown-item" href="@Url.Action("PopulaNotaFinalAsync","Aluno")">Emular Nota Final</a>
+                    <a class="dropdown-item" href="@Url.Action("Delete","Aluno")">Resetar</a>
                 </div>
             </li>
         </ul>

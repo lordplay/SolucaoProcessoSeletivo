@@ -15,10 +15,15 @@ namespace SistemaAcademico.Controllers
     {
 
         // GET: Aluno
-        public ActionResult Index()
+        
+        public ActionResult Index(int? sortOrder)
         {
             AlunoDAO dAO = new AlunoDAO();
-            return View(dAO.ListarAlunos());
+
+   
+
+            return View(dAO.BuscaParametro(sortOrder));
+
         }
 
         //Popula 3 turmas com 20 alunos -

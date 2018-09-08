@@ -8,7 +8,7 @@ using System.Data.Entity.Migrations;
 
 namespace SistemaAcademico.DAO
 {
-    public class AlunoDAO 
+    public class AlunoDAO
     {
         private SistemaContext contexto = new SistemaContext();
 
@@ -55,6 +55,70 @@ namespace SistemaAcademico.DAO
             return contexto.Alunos.Include(x => x.Turma).Where(x => x.Status == Aluno._Status.ProvaFinal).ToList();
         }
 
+        internal List<Aluno> BuscaParametro(int? sortBy)
+        {
+            using (SistemaContext context = new SistemaContext())
+            {
+                IQueryable<Aluno> alunos = context.Alunos.Include(x => x.Turma);
+                if (sortBy != null && sortBy == 0)
+                {
+                    alunos = alunos.OrderBy(x => x.Nome).ThenBy(x => x.Turma);
+                    return alunos.ToList();
+                }
+                if (sortBy != null && sortBy == 1)
+                {
+                    alunos = alunos.OrderByDescending(x => x.Status);
+                    alunos.ToList();
+                }
+                if (sortBy != null && sortBy == 2)
+                {
+                    alunos = alunos.OrderByDescending(x => x.Nota1);
+                    alunos.ToList();
+                }
+                if (sortBy != null && sortBy == 3)
+                {
+                    alunos = alunos.OrderByDescending(x => x.Nota2);
+                    alunos.ToList();
+                }
+                if (sortBy != null && sortBy == 4)
+                {
+                    alunos = alunos.OrderByDescending(x => x.Nota3);
+                    alunos.ToList();
+                }
+                if (sortBy != null && sortBy == 5)
+                {
+                    alunos = alunos.OrderByDescending(x => x.NotaFinal);
+                    alunos.ToList();
+                }
+                if (sortBy != null && sortBy == 6)
+                {
+                    alunos = alunos.OrderByDescending(x => x.MediaPonderada);
+                    alunos.ToList();
+                }
+                if (sortBy != null && sortBy == 7)
+                {
+                    alunos = alunos.OrderByDescending(x => x.MediaPonderadaEProvaFinal);
+                    alunos.ToList();
+                }
+                if (sortBy != null && sortBy == 8)
+                {
+                    alunos = alunos.OrderByDescending(x => x.NotaParaCompeticao);
+                    alunos.ToList();
+                }
+                if (sortBy != null && sortBy == 9)
+                {
+                    alunos = alunos.OrderByDescending(x => x.MediaCompeticao);
+                    alunos.ToList();
+                }
+                if (sortBy != null && sortBy == 10) // Parametro para buscar competidores 
+                {
+                    alunos = alunos.OrderByDescending(x => x.NotaParaCompeticao);
+                    return alunos.Take(5).ToList();
+                }
+                return alunos.ToList(); ;
+            }
+        }
+
         //Buscar competidor 
         internal List<Aluno> BuscaCompetidores()
         {
@@ -69,6 +133,6 @@ namespace SistemaAcademico.DAO
             return contexto.Alunos.Include(t => t.Turma).OrderByDescending(x => x.MediaCompeticao).Take(1).ToList();
         }
 
-       
+
     }
 }

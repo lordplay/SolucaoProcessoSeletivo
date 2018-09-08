@@ -1,57 +1,50 @@
 ﻿@model IEnumerable<SistemaAcademico.Entidades.Aluno>
 
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table table-bordered text-center">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Turma.Nome)
+            @Html.DisplayNameFor(model => model.Turma)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Matricula)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nome)
+            @Html.ActionLink("Nome", "Index", "Aluno", new { @sortOrder = 0 }, null)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.ActionLink("Status", "Index", "Aluno", new { @sortOrder = 1 }, null)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nota1)
+            @Html.ActionLink("Avaliação 1", "Index", "Aluno", new { @sortOrder = 2 }, null)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nota2)
+            @Html.ActionLink("Avaliação 2", "Index", "Aluno", new { @sortOrder = 3 }, null)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nota3)
+            @Html.ActionLink("Avaliação 3", "Index", "Aluno", new { @sortOrder = 4}, null)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NotaFinal)
+            @Html.ActionLink("Avaliação Final", "Index", "Aluno", new { @sortOrder = 5 }, null)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MediaPonderada)
+            @Html.ActionLink("Média", "Index", "Aluno", new { @sortOrder = 6 }, null)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MediaPonderadaEProvaFinal)
+            @Html.ActionLink("Média c/ Avaliação Final", "Index", "Aluno", new { @sortOrder = 7 }, null)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NotaParaCompeticao)
+            @Html.ActionLink("Avaliação da Competição", "Index", "Aluno", new { @sortOrder = 8 }, null)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProvaEspecial)
+            @Html.ActionLink("Média da Competição", "Index", "Aluno", new { @sortOrder = 9 }, null)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MediaCompeticao)
-        </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
+
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Turma.Nome)
@@ -62,21 +55,28 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            @if (item.Nota1 > 6)
+            @if (item.Status == SistemaAcademico.Entidades.Aluno._Status.Reprovado)
             {
-                <td class="table-success">
-                    @Html.DisplayFor(modelItem => item.Nota1)
+                <td class="table-danger">
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+            }
+            else if (item.Status == SistemaAcademico.Entidades.Aluno._Status.ProvaFinal)
+            {
+                <td class="table-warning">
+                    @Html.DisplayFor(modelItem => item.Status)
                 </td>
             }
             else
             {
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nota1)
+                <td class="table-success">
+                    @Html.DisplayFor(modelItem => item.Status)
                 </td>
             }
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Nota1)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nota2)
             </td>
@@ -84,16 +84,13 @@
                 @Html.DisplayFor(modelItem => item.Nota3)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NotaFinal, new { @class = "align-middle" })
+                @Html.DisplayFor(modelItem => item.NotaFinal)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MediaPonderada)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MediaPonderadaEProvaFinal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NotaParaCompeticao)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProvaEspecial)

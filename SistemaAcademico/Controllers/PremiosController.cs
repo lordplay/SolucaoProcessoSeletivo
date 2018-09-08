@@ -21,7 +21,7 @@ namespace SistemaAcademico.Controllers
         {
             //Listar 5 melhores notas
             AlunoDAO alunoDAO = new AlunoDAO();
-            var Lista = dAO.BuscaCompetidores();
+            var Lista = dAO.BuscaParametro(10); // Retorna 5 alunos com a media mais alta 
             return View(Lista);
         }
 
