@@ -1,5 +1,7 @@
 # SolucaoProcessoSeletivo
-Teste Processo Seletivo 
+Processo Seletivo
+
+Sistema de gerenciamento de cadastro escolar
 
 
 
