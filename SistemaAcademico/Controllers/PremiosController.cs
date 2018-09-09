@@ -43,40 +43,14 @@ namespace SistemaAcademico.Controllers
             await dAO.Editar(ListaDeAlunos);
 
             //Retornar para o Index
-            return RedirectToAction("Index");
+            return RedirectToAction("MostrarRanking");
         }
 
-        //Calcular notas da competição
-        public async Task<ActionResult> CalcularCompeticao()
-        {
-            var Participantes = dAO.BuscaCompetidores();
-
-
-            ListaDeAlunos.Clear();
-            //Calcular Media de Todas as provas anteriores
-            foreach (Aluno aluno in Participantes)
-            {
-                
-
-                if (aluno.NotaFinal.HasValue) // Se tem valor significa que fez a prova
-                {
-                    aluno.MediaCompeticao = (aluno.Nota1 + aluno.Nota2 + aluno.Nota3+ Convert.ToDouble(aluno.NotaFinal) + (aluno.ProvaEspecial * 2)) / 6;
-                    ListaDeAlunos.Add(aluno);
-                }
-                else
-                {
-                    aluno.MediaCompeticao = ((aluno.Nota1 + aluno.Nota2 + aluno.Nota3 + (aluno.ProvaEspecial * 2)) / 5);
-                    ListaDeAlunos.Add(aluno);
-                }
-                await dAO.Editar(ListaDeAlunos);
-            }
-
-            return RedirectToAction("Index");
-        }
         public ActionResult MostrarRanking() //Exibe o ranking dos alunos que participaram da competição
         {
-            var Lista = dAO.BuscaCampeao();
-            return View(Lista);
+            var Lista = dAO.BuscaCompetidores();
+            ViewBag.Campeao = dAO.BuscaCampeao();
+            return View(Lista.OrderByDescending(x => x.MediaCompeticao));
         }
 
     }

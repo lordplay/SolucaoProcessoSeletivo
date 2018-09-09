@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<SistemaAcademico.Entidades.Aluno>
 
+<div class="justify-content-md-center">
+    <h1 class="text-center"> MELHORES ALUNOS</h1>
+</div>
 
-<table class="table table-bordered text-center">
+
+<table class="table table-bordered text-center table-striped table-hover">
     <tr>
         <th>
             Ranking
@@ -31,24 +35,17 @@
             @Html.DisplayNameFor(model => model.NotaFinal)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MediaPonderada)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MediaPonderadaEProvaFinal)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.ProvaEspecial)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MediaCompeticao)
+            @Html.DisplayNameFor(model => model.MediaFinalComTodasAsProvas)
         </th>
 
     </tr>
+    @{
+        int x = 0;
+    }
     @foreach (var item in Model)
     {
         <tr>
-            <td></td>
+            <td>@{x = x + 1;} @x</td>
             <td>
                 @Html.DisplayFor(modelItem => item.Turma.Nome)
             </td>
@@ -74,22 +71,11 @@
                 @Html.DisplayFor(modelItem => item.NotaFinal)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MediaPonderada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MediaPonderadaEProvaFinal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProvaEspecial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MediaCompeticao)
+                @Html.DisplayFor(modelItem => item.MediaFinalComTodasAsProvas)
             </td>
         </tr>
     }
 
 </table>
 
-<div>
-  @Html.Partial("~/Views/Premios/MostrarRanking.cshtml")
-</div>
+

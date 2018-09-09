@@ -102,7 +102,7 @@ namespace SistemaAcademico.DAO
                 }
                 if (sortBy != null && sortBy == 8)
                 {
-                    alunos = alunos.OrderByDescending(x => x.NotaParaCompeticao);
+                    alunos = alunos.OrderByDescending(x => x.MediaFinalComTodasAsProvas);
                     alunos.ToList();
                 }
                 if (sortBy != null && sortBy == 9)
@@ -112,8 +112,13 @@ namespace SistemaAcademico.DAO
                 }
                 if (sortBy != null && sortBy == 10) // Parametro para buscar competidores 
                 {
-                    alunos = alunos.OrderByDescending(x => x.NotaParaCompeticao);
+                    alunos = alunos.OrderByDescending(x => x.MediaFinalComTodasAsProvas);
                     return alunos.Take(5).ToList();
+                }
+                if (sortBy != null && sortBy == 11)
+                {
+                    alunos = alunos.OrderByDescending(x => x.ProvaEspecial);
+                    return alunos.ToList();
                 }
                 return alunos.ToList(); ;
             }
@@ -123,7 +128,7 @@ namespace SistemaAcademico.DAO
         internal List<Aluno> BuscaCompetidores()
         {
 
-            return contexto.Alunos.Include(x => x.Turma).OrderByDescending(x => x.NotaParaCompeticao).Where(X => X.Status == Aluno._Status.Aprovado).Take(5).ToList(); ;
+            return contexto.Alunos.Include(x => x.Turma).OrderByDescending(x => x.MediaFinalComTodasAsProvas).Where(X => X.Status == Aluno._Status.Aprovado).Take(5).ToList(); ;
         }
 
 

@@ -68,37 +68,6 @@ namespace SistemaAcademico.Controllers
             return RedirectToAction("Index");
         }
 
-        //Calcular a media de todos os alunos --> Somente notas 1,2 e 3
-        public async Task<ActionResult> CalculaTodasAsMediasAsync()
-        {
-            AlunoDAO dAO = new AlunoDAO();
-            IList<Aluno> alunos = dAO.ListarAlunos();
-            List<Aluno> alunosEditados = new List<Aluno>();
-            foreach (Aluno aluno in alunos)
-            {
-                aluno.CalculaMedia();
-                alunosEditados.Add(aluno);
-            }
-            await dAO.Editar(alunosEditados);
-            return RedirectToAction("Index");
-        }
-
-        //Verificar o Status do Aluno
-        public async Task<ActionResult> VerificaStatusAsync()
-        {
-            AlunoDAO dAO = new AlunoDAO();
-            IList<Aluno> alunos = dAO.ListarAlunos();  //Lista para guardar os alunos do banco de dados
-            List<Aluno> ListaDeAlunos = new List<Aluno>();
-            alunos = dAO.ListarAlunos();
-            foreach (Aluno aluno in alunos)
-            {
-                aluno.VerificaEstado(); //Altera o status do aluno para Aprovado, Reprovado ou Prova Final
-                ListaDeAlunos.Add(aluno);
-            }
-            await dAO.Editar(ListaDeAlunos);
-            return RedirectToAction("Index");
-        }
-
         //Popular notas da prova final e calcular as pessoas que ficaram de fato reprovadas. 
         public async Task<ActionResult> PopulaNotaFinalAsync()
         {
@@ -124,40 +93,6 @@ namespace SistemaAcademico.Controllers
             return RedirectToAction("Index");
         }
 
-        //Calcula Media das Duas ultimas provas e altera o status do aluno para aprovado/reprovado
-        public async Task<ActionResult> CalcularMediaFinalAsync()
-        {
-            AlunoDAO dAO = new AlunoDAO();
-            IList<Aluno> alunos = new List<Aluno>();
-            List<Aluno> alunosLista = new List<Aluno>();
-
-            //Busca por alunos que estão com status de prova final e calcula sua MediaFinal
-            alunos = dAO.BuscaEstadoFinal();
-            //Logica para calcular a media de cada aluno em prova final 
-            foreach (Aluno aluno in alunos)
-            {
-                aluno.CalculaMediaFinal(); //Calcula e altera o status do aluno para aprovado/reprovado. 
-                alunosLista.Add(aluno);
-            }
-            await dAO.Editar(alunosLista);
-            return RedirectToAction("Index");
-        }
-
-        //Preencher Nota Final Para A Competição
-        public async Task<ActionResult> PreencheNotaParaCompeticaoAsync()
-        {
-            AlunoDAO dAO = new AlunoDAO();
-            List<Aluno> alunos = dAO.ListarAlunos();
-            List<Aluno> ListaDeAlunos = new List<Aluno>();
-
-            foreach (Aluno aluno in alunos)
-            {
-                aluno.PreencheNotaParaCompeticao();
-                ListaDeAlunos.Add(aluno);
-            }
-            await dAO.Editar(ListaDeAlunos);
-            return RedirectToAction("Index");
-        }
 
         public ActionResult Delete()
         {

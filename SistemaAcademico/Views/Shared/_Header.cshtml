@@ -1,5 +1,5 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-light bg-light fix fixed-top">
-    <a class="navbar-brand" href="#">Home</a>
+    <a class="navbar-brand" href="@Url.Action("Index","Aluno")">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -10,9 +10,9 @@
                     Competição
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="@Url.Action("Index","Premios")">Ver competidores</a>
-                    <a class="dropdown-item" href="@Url.Action("GerarNotaEspecialAsync","Premios")">Emular Avaliação Competitiva</a>
-                    <a class="dropdown-item" href="@Url.Action("MostrarRanking","Premios")">Mostrar Ranking</a>
+                    <a class="dropdown-item" href="@Url.Action("Index","Premios")">Visualizar competidores</a>
+                    <a class="dropdown-item" href="@Url.Action("GerarNotaEspecialAsync","Premios")">Simular Avaliação Competitiva</a>
+                    <a class="dropdown-item" href="@Url.Action("MostrarRanking","Premios")">Visualizar Ranking</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -21,9 +21,9 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="@Url.Action("Index","Aluno")">Lista de alunos</a>
-                    <a class="dropdown-item" href="@Url.Action("PopulaAluno","Aluno")">Emular Cadastros</a>
-                    <a class="dropdown-item" href="@Url.Action("PopulaNotaFinalAsync","Aluno")">Emular Nota Final</a>
-                    <a class="dropdown-item" href="@Url.Action("Delete","Aluno")">Resetar</a>
+                    <a class="dropdown-item" href="@Url.Action("PopulaAluno","Aluno")">Simular Cadastros</a>
+                    <a class="dropdown-item" href="@Url.Action("PopulaNotaFinalAsync","Aluno")">Simular Nota Final</a>
+                    <a class="dropdown-item" href="@Url.Action("Delete","Aluno")">Resetar Sistema</a>
                 </div>
             </li>
         </ul>

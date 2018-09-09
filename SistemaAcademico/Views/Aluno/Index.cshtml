@@ -2,7 +2,7 @@
 
 
 
-<table class="table table-bordered text-center">
+<table class="table table-bordered text-center table-striped table-hover"">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Turma)
@@ -29,13 +29,10 @@
             @Html.ActionLink("Avaliação Final", "Index", "Aluno", new { @sortOrder = 5 }, null)
         </th>
         <th>
-            @Html.ActionLink("Média", "Index", "Aluno", new { @sortOrder = 6 }, null)
-        </th>
+            @Html.ActionLink("Média Final","Index","Aluno", new { @sortOrder = 8}, null)
+            </th>
         <th>
-            @Html.ActionLink("Média c/ Avaliação Final", "Index", "Aluno", new { @sortOrder = 7 }, null)
-        </th>
-        <th>
-            @Html.ActionLink("Avaliação da Competição", "Index", "Aluno", new { @sortOrder = 8 }, null)
+            @Html.ActionLink("Avaliação da Competição", "Index", "Aluno", new { @sortOrder = 11  }, null)
         </th>
         <th>
             @Html.ActionLink("Média da Competição", "Index", "Aluno", new { @sortOrder = 9 }, null)
@@ -87,10 +84,7 @@
                 @Html.DisplayFor(modelItem => item.NotaFinal)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MediaPonderada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MediaPonderadaEProvaFinal)
+                @Html.DisplayFor(modelItem => item.MediaFinalComTodasAsProvas)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProvaEspecial)
